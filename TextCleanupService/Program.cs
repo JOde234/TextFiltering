@@ -17,14 +17,10 @@ var host = builder
 
 using var serviceScope = host.Services.CreateScope();
 var serviceProvider = serviceScope.ServiceProvider;
-
-var textLoader = serviceProvider.GetRequiredService<ITextLoader>();
 var dataConfig = serviceProvider.GetService<IOptions<DataConfig>>()!.Value;
 
 try
 {
-    var rawText = await textLoader.Load( dataConfig.TxtFilename );
-
     var textFilteringService = ( ITextFilteringService )host.Services.GetService( typeof(ITextFilteringService) )!;
     
     var textFilters = new TextFilters();
@@ -32,8 +28,8 @@ try
     filterHandler += textFilters.RemoveWordsShorterThan3Letters;
     filterHandler += textFilters.RemoveWordsWithLetterT;
     
-    Console.WriteLine($"Output with preserved white spaces: {textFilteringService.ApplyFilters( rawText, filterHandler )}");
-    Console.WriteLine($"Output with normalized white spaces: {textFilteringService.ApplyFilters( rawText, filterHandler, true )}");
+    Console.WriteLine($"Output with preserved white spaces: {await textFilteringService.ApplyFilters( dataConfig.TxtFilename, filterHandler )}");
+    Console.WriteLine($"Output with normalized white spaces: {await textFilteringService.ApplyFilters( dataConfig.TxtFilename, filterHandler, true )}");
 }
 catch( Exception e )
 {

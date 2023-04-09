@@ -5,8 +5,15 @@ namespace TextCleanupService.Services;
 
 public class TextFilteringService: ITextFilteringService
 {
-    public string ApplyFilters( string rawText, Action<string[]> filterHandler, bool normalizeWhitespaces = false )
+    private readonly ITextLoader textLoader;
+    
+    public TextFilteringService(ITextLoader textLoader) {
+        this.textLoader = textLoader;
+    }
+    
+    public async Task<string> ApplyFilters( string txtFilename, Action<string[]> filterHandler, bool normalizeWhitespaces = false )
     {
+        var rawText = await textLoader.Load(txtFilename);
         if( rawText.Length == 0 ) throw new InvalidDataException( "Cannot apply filters to the empty input" );
         var words = Regex.Split( rawText, @"\b" );
         filterHandler( words );
