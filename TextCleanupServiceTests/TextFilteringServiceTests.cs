@@ -26,7 +26,6 @@ public class TextFilteringServiceTests
     public async void ShouldRemoveWordsWithVowelInTheMiddle()
     {
         var filterHandler = textFilters.RemoveWordsVowelInTheMiddle;
-        //var rawText = textLoader.Object.Load( "test.txt" ).Result;
         const string expected = "beginning tired, and nothing : ";
         var result = await textFilteringService.ApplyFilters( "test.txt", filterHandler, true );
         result.ShouldBe( expected );
@@ -36,7 +35,6 @@ public class TextFilteringServiceTests
     public async void ShouldRemoveWordsShorterThan3Letters()
     {
         var filterHandler = textFilters.RemoveWordsShorterThan3Letters;
-        //var rawText = textLoader.Object.Load( "test.txt" ).Result;
         const string expected = "Alice was beginning get very tired, and having nothing : ";
         var result = await textFilteringService.ApplyFilters( "test.txt", filterHandler, true );
         result.ShouldBe( expected );
@@ -46,7 +44,6 @@ public class TextFilteringServiceTests
     public async void ShouldRemoveWordsWithLetterT()
     {
         var filterHandler = textFilters.RemoveWordsWithLetterT;
-        //var rawText = textLoader.Object.Load( "test.txt" ).Result;
         const string expected = "Alice was beginning very , and of having do: ";
         var result = await textFilteringService.ApplyFilters( "test.txt", filterHandler, true );
         result.ShouldBe( expected );
@@ -57,7 +54,6 @@ public class TextFilteringServiceTests
     {
         var filterHandler = textFilters.RemoveWordsWithLetterT;
         filterHandler += textFilters.RemoveWordsShorterThan3Letters;
-        //var rawText = textLoader.Object.Load( "test.txt" ).Result;
         const string expected = "Alice was beginning very , and having : ";
         var result = await textFilteringService.ApplyFilters( "test.txt", filterHandler, true );
         result.ShouldBe( expected );
@@ -68,7 +64,6 @@ public class TextFilteringServiceTests
     {
         var filterHandler = textFilters.RemoveWordsShorterThan3Letters;
         filterHandler += textFilters.RemoveWordsVowelInTheMiddle;
-        //var rawText = textLoader.Object.Load( "test.txt" ).Result;
         const string expected = "beginning tired, and nothing : ";
         var result = await textFilteringService.ApplyFilters( "test.txt", filterHandler, true );
         result.ShouldBe( expected );
@@ -79,7 +74,6 @@ public class TextFilteringServiceTests
     {
         var filterHandler = textFilters.RemoveWordsWithLetterT;
         filterHandler += textFilters.RemoveWordsVowelInTheMiddle;
-        //var rawText = textLoader.Object.Load( "test.txt" ).Result;
         const string expected = "beginning , and : ";
         var result = await textFilteringService.ApplyFilters( "test.txt", filterHandler, true );
         result.ShouldBe( expected );
@@ -91,7 +85,6 @@ public class TextFilteringServiceTests
         var filterHandler = textFilters.RemoveWordsWithLetterT;
         filterHandler += textFilters.RemoveWordsShorterThan3Letters;
         filterHandler += textFilters.RemoveWordsVowelInTheMiddle;
-        //var rawText = textLoader.Object.Load( "test.txt" ).Result;
         const string expected = "beginning , and : ";
         var result = await textFilteringService.ApplyFilters( "test.txt", filterHandler, true );
         result.ShouldBe( expected );
@@ -101,7 +94,6 @@ public class TextFilteringServiceTests
     public async void ShouldThrowOnEmptyInput()
     {
         var filterHandler = textFilters.RemoveWordsWithLetterT;
-        //var rawText = textLoader.Object.Load( "test_empty.txt" ).Result;
         
         var exception = await Record.ExceptionAsync(() => textFilteringService.ApplyFilters( "test_empty.txt", filterHandler ));
         exception?.Message.ShouldContain("Cannot apply filters to the empty input");
